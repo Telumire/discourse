@@ -1,0 +1,36 @@
+<script>
+  // Get the current URL
+const currentUrl = window.location.href;
+
+// Split the URL by '/' to extract the parts
+const urlParts = currentUrl.split('/');
+
+// Get the last part of the URL
+const lastPart = urlParts[urlParts.length - 1];
+
+// Function to check if the last part of the URL is a full URL
+const isFullUrl = (part) => {
+  try {
+    new URL(part);
+    return true;
+  } catch (_) {
+    return false;
+  }
+};
+
+// Create an iframe element
+const iframe = document.createElement('iframe');
+
+// Determine the correct src for the iframe
+// Checks if 'lastPart' is a full URL, otherwise prepends it with the base URL
+iframe.src = isFullUrl(lastPart) ? lastPart : `https://example.com/${lastPart}`;
+
+// Set additional attributes for the iframe
+iframe.style.width = "100%";
+iframe.style.height = "600px"; // Customize the size as needed
+
+// Append the iframe to the document's body or a specific container
+// Example for appending to a specific container: document.getElementById('yourContainerId').appendChild(iframe);
+document.body.appendChild(iframe);
+
+</script>
