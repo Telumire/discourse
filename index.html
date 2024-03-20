@@ -1,30 +1,28 @@
-<script defer>
-// Create a new URL object based on the current browser URL
-const currentUrl = new URL(window.location.href);
-
-// Use URLSearchParams to parse query parameters
-const params = new URLSearchParams(currentUrl.search);
-
-// Assuming the URL you want to embed is the first parameter without a specific name
-const embedUrl = params.values().next().value;
-
-// Only proceed if we successfully obtained an embedUrl
-if (embedUrl) {
-    // Create an iframe element
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    iframe{
+        width: 100%;
+        height: 100%;
+        border: none;
+        position:fixed;
+        inset:0;
+    }
+    </style>
+</head>
+<body>
+    
+</body>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    console.log(urlParams.get('wiki'));
+    const wiki = urlParams.get('wiki');
     const iframe = document.createElement('iframe');
-
-    // Set the src of the iframe to the URL we want to embed
-    iframe.src = embedUrl;
-
-    // Set additional attributes as needed
-    iframe.width = "100%";
-    iframe.height = "600px"; // Customize the size as needed
-    iframe.frameBorder = "0"; // To remove border
-
-    // Append the iframe to the document's body or a specific container
-    document.body.appendChild(iframe); // or document.getElementById('yourContainerId').appendChild(iframe);
-} else {
-    console.error("Embed URL not found!");
-}
-
+    iframe.src = `${wiki}`;
+    document.body.appendChild(iframe);
 </script>
+</html>
