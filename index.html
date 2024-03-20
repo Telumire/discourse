@@ -1,36 +1,30 @@
 <script>
-  // Get the current URL
-const currentUrl = window.location.href;
+// Create a new URL object based on the current browser URL
+const currentUrl = new URL(window.location.href);
 
-// Split the URL by '/' to extract the parts
-const urlParts = currentUrl.split('/');
+// Use URLSearchParams to parse query parameters
+const params = new URLSearchParams(currentUrl.search);
 
-// Get the last part of the URL
-const lastPart = urlParts[urlParts.length - 1];
+// Assuming the URL you want to embed is the first parameter without a specific name
+const embedUrl = params.values().next().value;
 
-// Function to check if the last part of the URL is a full URL
-const isFullUrl = (part) => {
-  try {
-    new URL(part);
-    return true;
-  } catch (_) {
-    return false;
-  }
-};
+// Only proceed if we successfully obtained an embedUrl
+if (embedUrl) {
+    // Create an iframe element
+    const iframe = document.createElement('iframe');
 
-// Create an iframe element
-const iframe = document.createElement('iframe');
+    // Set the src of the iframe to the URL we want to embed
+    iframe.src = embedUrl;
 
-// Determine the correct src for the iframe
-// Checks if 'lastPart' is a full URL, otherwise prepends it with the base URL
-iframe.src = isFullUrl(lastPart) ? lastPart : `https://example.com/${lastPart}`;
+    // Set additional attributes as needed
+    iframe.width = "100%";
+    iframe.height = "600px"; // Customize the size as needed
+    iframe.frameBorder = "0"; // To remove border
 
-// Set additional attributes for the iframe
-iframe.style.width = "100%";
-iframe.style.height = "600px"; // Customize the size as needed
-
-// Append the iframe to the document's body or a specific container
-// Example for appending to a specific container: document.getElementById('yourContainerId').appendChild(iframe);
-document.body.appendChild(iframe);
+    // Append the iframe to the document's body or a specific container
+    document.body.appendChild(iframe); // or document.getElementById('yourContainerId').appendChild(iframe);
+} else {
+    console.error("Embed URL not found!");
+}
 
 </script>
